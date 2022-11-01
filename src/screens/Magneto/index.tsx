@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Gyroscope } from "expo-sensors";
+import { Magnetometer } from "expo-sensors";
 import styles from './styles';
 import { Subscription } from 'expo-media-library';
 
-export default function Gyroscopio() {
+export default function Magneto() {
     const [data, setData] = useState({
         x: 0,
         y: 0,
@@ -13,17 +13,20 @@ export default function Gyroscopio() {
     const [subscription, setSubscription] = useState<Subscription | null>(null);
 
     const _slow = () => {
-        Gyroscope.setUpdateInterval(1000);
+        Magnetometer.setUpdateInterval(1000);
     };
 
     const _fast = () => {
-        Gyroscope.setUpdateInterval(16);
+        Magnetometer.setUpdateInterval(16);
     };
 
-    const _subscribe = () => {
+    const _subscribe = async() => {
+        await Magnetometer.requestPermissionsAsync()
         setSubscription(
-            Gyroscope.addListener(gyroscopeData => {
-                setData(gyroscopeData);
+            Magnetometer.addListener(result => {
+                console.log('oi')
+                setData(result);
+                console.log(result) //
             })
         );
     };
@@ -39,10 +42,10 @@ export default function Gyroscopio() {
     }, []);
 
     const { x,y,z} = data;
-
+    // console.log(subscription) 
     return(
         <View style={styles.container}>
-            <Text style={styles.text}>Gyroscope:</Text>
+            <Text style={styles.text}>Magnetometer:</Text>
             <Text style={styles.text}>
                 x: {round(x)} y: {round(y)} z: {round(z)}
             </Text>
