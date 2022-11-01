@@ -3,7 +3,7 @@ import { Text, StyleSheet } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../styles/colors";
-import { ChatScreen, AcelerometroScreen, MapScreen, PerfilScreen, SairScreen, CameraScreen, ArquivoScreen, QrCodeScreen, VideoAudioScreen } from "../screens";
+import { ChatScreen, AcelerometroScreen, MapScreen, PerfilScreen, SairScreen, CameraScreen, ArquivoScreen, QrCodeScreen, VideoAudioScreen, GyroscopioScreen } from "../screens";
 import DrawerNavigation from "./drawer.navigation";
 import ChatNavigation from "./chat.navigation";
 
@@ -146,9 +146,23 @@ export default function HomeRoute() {
                             size={24}
                             color={colors.white}
                         />
-        ),
-    }}
-/>
+                    ),
+                }}
+            />
+            <Drawer.Screen
+                name="Gyroscopio"
+                component={GyroscopioScreen}
+                options= {{
+                    drawerLabel: "Gyroscópio",
+                    drawerIcon: () => (
+                        <MaterialCommunityIcons
+                            name="balance-scale"
+                            size={24}
+                            color={colors.white}
+                        />
+                    ),
+                }}
+            />
         </Drawer.Navigator>
     );
 }
